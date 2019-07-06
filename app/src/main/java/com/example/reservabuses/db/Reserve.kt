@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
         childColumns = arrayOf("busId")
     )])
 data class Reserve(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "uid") val uid: Int,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rid") val rid: Int,
     @ColumnInfo(name = "userId") val userId: String,
     @ColumnInfo(name = "busId") val busId: String
 )

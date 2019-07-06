@@ -4,14 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.reservabuses.db.Dao.BusDao
+import com.example.reservabuses.db.Dao.UserDao
+import com.example.reservabuses.db.Dao.ReserveDao
 
-@Database(entities = [Bus::class, User::class, Reserve::class, ComplaintVote::class], version = 1, exportSchema = false)
+@Database(entities = [Buses::class, User::class, Reserve::class], version = 1, exportSchema = false)
 public abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun complaintDao(): ComplaintDao
+    abstract fun reserveDao(): ReserveDao
     abstract fun userDao(): UserDao
-    abstract fun commentaryDao(): CommentaryDao
-    abstract fun complaintVoteDao(): ComplaintVoteDao
+    abstract fun busDao(): BusDao
 
     // Add Singleton to prevent having multiple instances
     // of the database opened at the same time.

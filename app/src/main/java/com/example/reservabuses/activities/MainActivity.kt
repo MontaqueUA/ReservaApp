@@ -1,10 +1,18 @@
 package com.example.reservabuses
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.example.ReservaBuses.CredentialsManager
+import com.example.ReservaBuses.RequestCode
+import com.example.reservabuses.activities.LoginActivity
+import com.example.reservabuses.db.AppDatabase
+import com.example.reservabuses.db.User
 
 class MainActivity : AppCompatActivity() {
-
+    private val currentLoadedFragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
