@@ -1,14 +1,14 @@
 package com.example.reservabuses.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.example.reservabuses.Converters
 import com.example.reservabuses.db.Dao.BusDao
 import com.example.reservabuses.db.Dao.UserDao
 import com.example.reservabuses.db.Dao.ReserveDao
 
 @Database(entities = [Buses::class, User::class, Reserve::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 public abstract class AppDatabase : RoomDatabase() {
 
     abstract fun reserveDao(): ReserveDao

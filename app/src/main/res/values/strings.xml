@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReservaBuses</string>
+    <string name="app_name">Reserva Buses</string>
     <!-- LOGIN ACTIVITY -->
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>
@@ -11,4 +11,20 @@
     <string name="useremail_credential_key">EMAIL</string>
     <string name="password_credential_key">PASSWORD</string>
     <string name="default_empty_credential_value"></string>
+    <!-- NAVIGATION DRAWER -->
+    <string name="navigation_drawer_home_title">Home</string>
+    <string name="navigation_drawer_make_complaint_title">Make Complaint</string>
+    <string name="navigation_drawer_complaints_title">My Complaints</string>
+    <string name="navigation_drawer_others_complaints_title">Others Complaints</string>
+    <string name="navigation_drawer_complaints_summary_title">Complaints Summary</string>
+    <string name="navigation_drawer_sign_out_title">Sign Out</string>
+    <!-- ACTION BAR -->
+    <string name="action_bar_home_title">Home</string>
+    <string name="action_bar_make_complaint_title">Make Complaint</string>
+    <string name="action_bar_complaints_title">My Complaints</string>
+    <string name="action_bar_others_complaints_title">Others Complaints</string>
+    <string name="action_bar_complaints_summary_title">Complaints Summary</string>
+    <!-- HOME FRAGMENT -->
+    <string name="home_fragment_welcome_prepend">Welcome</string>
+
 </resources>

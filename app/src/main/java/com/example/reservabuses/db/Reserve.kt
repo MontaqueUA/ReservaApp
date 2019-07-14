@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 @Entity(tableName = "reserve", foreignKeys =
     [ForeignKey(entity = User::class,
@@ -16,5 +19,6 @@ import androidx.room.PrimaryKey
 data class Reserve(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rid") val rid: Int,
     @ColumnInfo(name = "userId") val userId: String,
-    @ColumnInfo(name = "busId") val busId: String
+    @ColumnInfo(name = "busId") val busId: String,
+    @ColumnInfo(name = "timeOfRes") val timeOfRes: LocalDateTime?
 )
