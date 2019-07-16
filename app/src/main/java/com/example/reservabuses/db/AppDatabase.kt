@@ -9,14 +9,12 @@ import com.example.reservabuses.db.Dao.ReserveDao
 
 @Database(entities = [Buses::class, User::class, Reserve::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-public abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun reserveDao(): ReserveDao
     abstract fun userDao(): UserDao
     abstract fun busDao(): BusDao
 
-    // Add Singleton to prevent having multiple instances
-    // of the database opened at the same time.
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

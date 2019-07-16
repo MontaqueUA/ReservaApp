@@ -1,4 +1,4 @@
-package com.example.ReservaBuses
+package com.example.reservabuses
 
 open class SingletonHolder<out T, in A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator

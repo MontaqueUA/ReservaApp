@@ -1,6 +1,7 @@
 package com.example.reservabuses
 
 import androidx.room.TypeConverter
+import java.time.LocalDateTime
 import java.util.*
 
 class Converters {
@@ -12,5 +13,10 @@ class Converters {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time?.toLong()
+    }
+
+    @TypeConverter
+    fun localDateTimeTo (localDateTime: LocalDateTime): String? {
+        return localDateTime.toString()
     }
 }

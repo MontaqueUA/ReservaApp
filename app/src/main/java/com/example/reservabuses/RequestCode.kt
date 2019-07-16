@@ -1,4 +1,4 @@
-package com.example.ReservaBuses
+package com.example.reservabuses
 
 /*
 enum class RequestCode(val value: Int) {

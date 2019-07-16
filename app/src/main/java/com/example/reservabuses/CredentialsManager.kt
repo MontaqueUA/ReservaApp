@@ -1,8 +1,8 @@
-package com.example.ReservaBuses
+package com.example.reservabuses
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.reservabuses.R
+import com.example.reservabuses.SingletonHolder
 
 class CredentialsManager private constructor(context: Context){
     private val context = context

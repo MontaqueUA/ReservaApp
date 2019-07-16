@@ -1,19 +1,14 @@
-package com.example.reservabuses
-
+package com.example.reservabuses.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.ReservaBuses.CredentialsManager
-import com.example.ReservaBuses.RequestCode
-import com.example.reservabuses.Fragments.HomeFragment
-import com.example.reservabuses.R.string
-import com.example.reservabuses.R.integer
-import com.example.reservabuses.activities.LoginActivity
+import com.example.reservabuses.R.string.action_bar_home_title
 import com.example.reservabuses.db.AppDatabase
 import com.example.reservabuses.db.Buses
 import com.example.reservabuses.db.User
@@ -21,12 +16,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import androidx.drawerlayout.widget.DrawerLayout
+import com.example.reservabuses.CredentialsManager
+import com.example.reservabuses.R
+import com.example.reservabuses.RequestCode
+import androidx.appcompat.widget.Toolbar
+import com.example.reservabuses.R.integer
+import com.example.reservabuses.db.Dao.BusDao
+import androidx.core.view.GravityCompat
+import com.example.reservabuses.fragments.ReserveFragment
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     private val currentLoadedFragment: Fragment? = null
+    private var drawer: DrawerLayout? = null
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val busDao: BusDao = AppDatabase.getDatabase(baseContext).busDao()
         setContentView(R.layout.activity_main)
+        setNavBar()
+        GlobalScope.launch(Dispatchers.IO) {
+            if(busDao.getBusForToday().isEmpty()){
+                createTodayBuses()
+            }
+        }
+        loadUserDataOrSendToLoginActivity()
     }
     private fun loadUserDataOrSendToLoginActivity() {
         val userData = loadUserData()
@@ -34,6 +52,42 @@ class MainActivity : AppCompatActivity() {
             initializeHomeFragment()
         } else {
             goToLoginActivity()
+        }
+    }
+    private fun setNavBar(){
+        val toolbar: Toolbar = this.findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawer = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+
+        val toggle = ActionBarDrawerToggle(
+            this, drawer, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
+        this.drawer!!.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener {menuItem ->
+            menuItem.isChecked = true
+            val manager = supportFragmentManager
+            val transaction = manager.beginTransaction()
+
+            when (menuItem.itemId){
+                R.id.reserve -> {
+                    val reserveFragment = supportFragmentManager.findFragmentByTag("reserveFragment")
+                    if(reserveFragment != null){
+                        transaction.replace(R.id.fragment_container, reserveFragment)
+                    }else{
+                        transaction.replace(R.id.fragment_container, ReserveFragment(), "reserveFragment")
+                    }
+
+                }
+                else -> {
+                    super.onOptionsItemSelected(menuItem)
+                }
+            }
+            transaction.commit()
+            true
         }
     }
     /*private fun setToolbar() {
@@ -50,10 +104,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeHomeFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.contentFrameLayout, HomeFragment(), "homeFrag")
-        transaction.commit()
+        //transaction.replace(R.id.contentFrameLayout, HomeFragment(), "homeFrag")
+        //transaction.commit()
         //navView.menu.getItem(0).isChecked = true
-        supportActionBar!!.title = getString(string.action_bar_home_title)
+        this.supportActionBar!!.title = getString(action_bar_home_title)
     }
     private fun goToLoginActivity() {
         // Clear current fragment to release memory.
@@ -64,7 +118,8 @@ class MainActivity : AppCompatActivity() {
         // Initialize LogIn Activity
         startActivityForResult(
                 Intent(this, LoginActivity::class.java),
-                RequestCode.GO_TO_LOGIN_FROM_MAIN_ACTIVITY)
+            RequestCode.GO_TO_LOGIN_FROM_MAIN_ACTIVITY
+        )
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -149,10 +204,15 @@ class MainActivity : AppCompatActivity() {
             for (schedule in schedules){
                 val schedule_of_bus = todayDate.plusMinutes(schedule.toLong())
                 Log.d("Horas", "Horarios: " + schedule_of_bus.toString())
-                busesDao.insertAll(Buses(0,schedule_of_bus,integer.busCapacity))
+                busesDao.insertAll(Buses(0,schedule_of_bus.toString(),integer.busCapacity))
             }
         }
-
-
+    }
+    override fun onBackPressed() {
+        if (drawer?.isDrawerOpen(GravityCompat.START)!!) {
+            drawer!!.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }

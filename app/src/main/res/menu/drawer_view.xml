@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://schemas.android.com/apk/res/android ">
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="@layout/nav_header">
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/home"
-                android:icon="@drawable/ic_launcher_background"
-                android:title="@string/navigation_drawer_home_title" />
+                android:icon="@drawable/ic_home_black_24dp"
+                android:title="@string/navigation_drawer_home_title"/>
+        <item
+                android:id="@+id/reserve"
+                android:icon="@drawable/ic_menu_black_24dp"
+                android:title="@string/navigation_drawer_reserve"
+                />
         <item
                 android:id="@+id/signOut"
-                android:icon="@drawable/ic_launcher_background"
-                android:title="@string/navigation_drawer_sign_out_title" />
+                android:icon="@drawable/ic_do_not_disturb_black_24dp"
+                android:title="@string/navigation_drawer_sign_out_title"/>
     </group>
 </menu>

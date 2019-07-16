@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.ReservaBuses.EmailValidator
+import com.example.reservabuses.EmailValidator
 import com.example.reservabuses.R
 import kotlinx.android.synthetic.main.activity_login.*
 
