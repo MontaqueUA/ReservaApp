@@ -18,7 +18,7 @@ import java.util.*
     )])
 data class Reserve(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rid") val rid: Int,
-    @ColumnInfo(name = "userId") val userId: String,
-    @ColumnInfo(name = "busId") val busId: String,
+    @ColumnInfo(name = "userId") val userId: Int,
+    @ColumnInfo(name = "busId") val busId: Int,
     @ColumnInfo(name = "timeOfRes") val timeOfRes: String?
 )

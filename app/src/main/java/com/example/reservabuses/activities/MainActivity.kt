@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         setNavBar()
         GlobalScope.launch(Dispatchers.IO) {
             if(busDao.getBusForToday().isEmpty()){
+                Log.d("Create schedules", "Today buses empty")
                 createTodayBuses()
             }
         }
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         drawer = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        val navView: NavigationView = this.findViewById(R.id.nav_view)
 
         val toggle = ActionBarDrawerToggle(
             this, drawer, toolbar,
@@ -90,14 +91,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-    /*private fun setToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp)
-        }
-        setupNavViewListener()
-    }*/
     private fun loadUserData(): Pair<String, String>? {
         return CredentialsManager.getInstance(baseContext).loadUser()
     }
@@ -134,49 +127,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    /*private fun setupNavViewListener() {
-        navView.setNavigationItemSelectedListener { menuItem ->
-            // set item as selected to persist highlight
-            menuItem.isChecked = true
-            // close drawer when item is tapped
-            drawerLayout.closeDrawers()
-
-            // Add code here to update the UI based on the item selected
-            // For example, swap UI fragments here
-            val transaction = supportFragmentManager.beginTransaction()
-
-            when (menuItem.itemId) {
-                R.id.home -> {
-                    val homeFragment = supportFragmentManager.findFragmentByTag("homeFrag")
-                    if (homeFragment != null) {
-                        transaction.replace(R.id.contentFrameLayout, homeFragment)
-                    } else {
-                        transaction.replace(R.id.contentFrameLayout, HomeFragment(), "homeFrag")
-                    }
-                    supportActionBar!!.title = getString(string.action_bar_home_title)
-                }
-
-                R.id.signOut -> {
-                    onSignOut()
-                }
-            }
-
-            transaction.commit()
-            true
-        }
-    }*/
     private fun storeUserCredentials(bundle: Bundle) {
         val userEmail = bundle.getString("EMAIL")!!
         val userPassword = bundle.getString("PASSWORD")!!
         CredentialsManager.getInstance(baseContext).saveUser(userEmail, userPassword)
         GlobalScope.launch(Dispatchers.IO) {
-            // Observation:
-            // Since the user info is not coming from the API, (we are just storing it locally)
-            // we have to previously check for it's existence so that we comply with UNIQUE
-            // constraint "users.email"
             val user : User? = AppDatabase.getDatabase(baseContext).userDao().getUser(userEmail)
             if (user == null) {
-                AppDatabase.getDatabase(baseContext).userDao().insertAll(User(0,userEmail,userPassword))// Storing user,
+                AppDatabase.getDatabase(baseContext).userDao().insertAll(User(0, userEmail,userPassword))// Storing user,
                 // this should come from an API
             }
         }
@@ -188,23 +146,13 @@ class MainActivity : AppCompatActivity() {
         todayDate = todayDate.minusSeconds(todayDate.second.toLong())
         todayDate = todayDate.minusMinutes(todayDate.minute.toLong())
         todayDate = todayDate.minusHours(todayDate.hour.toLong())
-        val schedules: Array<Int> = arrayOf(integer.morning715,
-            integer.morning725,
-            integer.morning735,
-            integer.morning745_1,
-            integer.morning745_2,
-            integer.morning750_1,
-            integer.morning750_2,
-            integer.morning750_3,
-            integer.morning755_1,
-            integer.morning755_2,
-            integer.morning800)
+        val schedules: IntArray = resources.getIntArray(R.array.schedules)
         val busesDao = AppDatabase.getDatabase(baseContext).busDao()
+        val busCapacity: Int = resources.getInteger(R.integer.busCapacity)
         GlobalScope.launch(Dispatchers.IO) {
             for (schedule in schedules){
                 val schedule_of_bus = todayDate.plusMinutes(schedule.toLong())
-                Log.d("Horas", "Horarios: " + schedule_of_bus.toString())
-                busesDao.insertAll(Buses(0,schedule_of_bus.toString(),integer.busCapacity))
+                busesDao.insertAll(Buses(0,schedule_of_bus.toString(),busCapacity))
             }
         }
     }

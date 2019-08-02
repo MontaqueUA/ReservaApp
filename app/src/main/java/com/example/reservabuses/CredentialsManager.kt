@@ -3,6 +3,10 @@ package com.example.reservabuses
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.reservabuses.SingletonHolder
+import com.example.reservabuses.db.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CredentialsManager private constructor(context: Context){
     private val context = context
@@ -28,6 +32,7 @@ class CredentialsManager private constructor(context: Context){
     }
 
     fun loadUser(): Pair<String, String>? {
+
         val sharedPref = getCredentialsSharedPreferences()
         val email = sharedPref.getString(
             context.getString(R.string.useremail_credential_key),
@@ -35,7 +40,6 @@ class CredentialsManager private constructor(context: Context){
         val password = sharedPref.getString(
             context.getString(R.string.password_credential_key),
             context.getString(R.string.default_empty_credential_value))
-
         return when {
             email.isNullOrEmpty() || password.isNullOrEmpty() -> null
             else -> Pair(email, password)

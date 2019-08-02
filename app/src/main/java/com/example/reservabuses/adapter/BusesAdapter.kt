@@ -39,7 +39,7 @@ class BusesAdapter(
         val rowView = inflater.inflate(R.layout.list_item_bus, parent, false)
         rowView.findViewById<TextView>(R.id.nameTextView).text = dataSource[position].bid.toString()
         rowView.findViewById<TextView>(R.id.dateTextView).text = dataSource[position].schedule.toString()
-        rowView.findViewById<TextView>(R.id.capacityTextView).text = dataSource[position].capacity.toString()
+        rowView.findViewById<TextView>(R.id.capacityTextView).text =  "/" + dataSource[position].capacity.toString()
         return rowView
     }
 }

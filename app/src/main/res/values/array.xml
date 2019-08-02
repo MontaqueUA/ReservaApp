@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="schedules">
+        <item>435</item>
+        <item>445</item>
+        <item>455</item>
+        <item>465</item>
+        <item>465</item>
+        <item>470</item>
+        <item>470</item>
+        <item>470</item>
+        <item>475</item>
+        <item>475</item>
+        <item>480</item>
+    </integer-array>
+</resources>

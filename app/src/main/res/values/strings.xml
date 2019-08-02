@@ -19,11 +19,14 @@
     <string name="navigation_drawer_reserve">Make Reserve</string>
     <!-- ACTION BAR -->
     <string name="action_bar_home_title">Home</string>
-    <string name="action_bar_make_complaint_title">Make Complaint</string>
-    <string name="action_bar_complaints_title">My Complaints</string>
-    <string name="action_bar_others_complaints_title">Others Complaints</string>
-    <string name="action_bar_complaints_summary_title">Complaints Summary</string>
     <!-- HOME FRAGMENT -->
     <string name="home_fragment_welcome_prepend">Welcome</string>
+    <!-- BUS DETAILS ACTIVITY -->
+    <string name="reserve_button_text">Reservar</string>
+    <string name="info_bus_details">Bus ID:</string>
+    <string name="capacity_bus_details">Capacidad:</string>
+    <string name="schedule_bus_details">Horario:</string>
+    <string name="reserve_toast_text_success">Reserva Hecha</string>
+    <string name="reserve_toast_text_failure">Error al Hacer la reserva</string>
 
 </resources>
